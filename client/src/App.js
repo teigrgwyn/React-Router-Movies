@@ -16,7 +16,6 @@ export default function App () {
         .then(response => {
           // Study this response with a breakpoint or log statements
           // and set the response data as the 'movieList' slice of state
-          console.table(response.data);
           setMovieList(response.data);
         })
         .catch(error => {
@@ -26,16 +25,19 @@ export default function App () {
     getMovies();
   }, []);
 
-  const addToSavedList = id => {
-    // This is stretch. Prevent the same movie from being "saved" more than once
-  };
+   const addToSavedList = id => {
+     // This is stretch. Prevent the same movie from being "saved" more than once
+   };
 
   return (
     <div>
       <SavedList list={[ /* This is stretch */]} />
-
-      <Route path='/movies/' component={MovieList} movies={movieList} />
-      <Route path='/movies/:id' component={Movie} movie={movieList.id /* we're sending over only 1 element of the array */} />
+      <Route exact path='/'>
+        <MovieList movies={movieList} />
+      </Route>
+      <Route path='/movies/:id'>
+        <Movie movie={movieList.id} />
+      </Route>
     </div>
   );
 }
